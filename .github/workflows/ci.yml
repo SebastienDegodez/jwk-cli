@@ -26,7 +26,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
+          
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: | 
+            6.0.x
+
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0
         with:
@@ -41,14 +47,8 @@ jobs:
           echo "Major: ${{ steps.gitversion.outputs.major }}"
           echo "Minor: ${{ steps.gitversion.outputs.minor }}"
           echo "NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
-          echo "NuGetVersion: ${{ steps.gitversion.outputs.nuGetVersion }}"          
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: | 
-            6.0.x
-
+          echo "NuGetVersion: ${{ steps.gitversion.outputs.nuGetVersion }}"
+          
       - name: Package release
         id: package_release
         run: |
